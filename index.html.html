@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <title>Kalkulator półek</title>
+
+  <style>
+
+    body{
+      font-family: Arial;
+      max-width: 700px;
+      margin: 40px auto;
+      padding: 20px;
+      background: #f5f5f5;
+    }
+
+    .box{
+      background: white;
+      padding: 25px;
+      border-radius: 12px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      margin-bottom: 30px;
+    }
+
+    h1{
+      margin-bottom: 10px;
+    }
+
+    h2{
+      margin-top: 0;
+    }
+
+    .info{
+      background: #f1f1f1;
+      padding: 12px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    input{
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      margin-bottom: 20px;
+      font-size: 16px;
+      box-sizing: border-box;
+    }
+
+    button{
+      width: 100%;
+      padding: 12px;
+      font-size: 16px;
+      background: black;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    button:hover{
+      opacity: 0.9;
+    }
+
+    .wyniki{
+      margin-top: 25px;
+      font-size: 18px;
+      line-height: 1.8;
+    }
+
+    .uwaga{
+      margin-top: 20px;
+      background: #fff3cd;
+      padding: 12px;
+      border-radius: 8px;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+  </style>
+</head>
+
+<body>
+
+<h1>Kalkulator półek</h1>
+
+<div class="info">
+  Kalkulator działa dla wieńca wpuszczonego
+  (znajdującego się pomiędzy bokami korpusu).
+</div>
+
+<!-- KALKULATOR 1 -->
+
+<div class="box">
+
+  <h2>Wartości mierzone są wewnątrz korpusu — NA SKRĘCONYM korpusie</h2>
+
+  <label>Wysokość korpusu (X)</label>
+  <input type="number" id="x1">
+
+  <label>Ilość półek (A)</label>
+  <input type="number" id="a1">
+
+  <button onclick="obliczWew()">OBLICZ</button>
+
+  <div id="wyniki1" class="wyniki"></div>
+
+</div>
+
+<!-- KALKULATOR 2 -->
+
+<div class="box">
+
+  <h2>Wszystkie wartości mierzone są na surowej płycie — PRZED skręceniem korpusu</h2>
+
+  <label>Wysokość korpusu (X)</label>
+  <input type="number" id="x2">
+
+  <label>Ilość półek (A)</label>
+  <input type="number" id="a2">
+
+  <button onclick="obliczSurowa()">OBLICZ</button>
+
+  <div id="wyniki2" class="wyniki"></div>
+
+</div>
+
+<script>
+
+function obliczWew(){
+
+  let X = parseFloat(document.getElementById("x1").value);
+  let A = parseInt(document.getElementById("a1").value);
+
+  let Z = X - 36;
+  let Y = Z - (18 * A);
+  let B = Y / (A + 1);
+
+  let tekst = `<h2>Wyniki:</h2>`;
+
+  tekst += `
+  
+  `;
+
+  tekst += `<br>B = ${B.toFixed(2)} mm<br><br>`;
+
+  for(let n = 1; n <= A; n++){
+
+    let wynik = (n * B) + (18 * n) - 20.5;
+
+    tekst += `A${n} = ${wynik.toFixed(2)} mm<br>`;
+  }
+
+  document.getElementById("wyniki1").innerHTML = tekst;
+}
+
+
+
+function obliczSurowa(){
+
+  let X = parseFloat(document.getElementById("x2").value);
+  let A = parseInt(document.getElementById("a2").value);
+
+  let Z = X - 36;
+  let Y = Z - (18 * A);
+  let B = Y / (A + 1);
+
+  let tekst = `<h2>Wyniki:</h2>`;
+
+  tekst += `
+  <div class="uwaga">
+    Wszystkie wartości mierzone są na surowej płycie.
+  </div>
+  `;
+
+  tekst += `<br>B = ${B.toFixed(2)} mm<br><br>`;
+
+  for(let n = 1; n <= A; n++){
+
+    let wynik = (n * B) + (18 * n) - 2.5;
+
+    tekst += `A${n} = ${wynik.toFixed(2)} mm<br>`;
+  }
+
+  document.getElementById("wyniki2").innerHTML = tekst;
+}
+
+</script>
+
+</body>
+</html>
